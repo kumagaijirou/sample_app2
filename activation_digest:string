@@ -1,0 +1,2 @@
+      invoke  active_record
+    conflict    db/migrate/20231221110320_add_activation_to_users.rb
