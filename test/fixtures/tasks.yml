@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  task_content: MyText
+  task_user_ID: 1
+  task_bet_user_ID: 1
+  task_deadline_at: 2024-01-07 18:28:56
+  Amount_bet: 1
+  Task_success_failure: false
+
+two:
+  task_content: MyText
+  task_user_ID: 1
+  task_bet_user_ID: 1
+  task_deadline_at: 2024-01-07 18:28:56
+  Amount_bet: 1
+  Task_success_failure: false
