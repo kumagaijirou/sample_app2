@@ -2,11 +2,11 @@ class TasksController < ApplicationController
 
   def create
     @tasks = Task.new(
-      task_content: params[:task_content],
-      task_bet_user_ID: params[:task_bet_user_ID],
-      task_deadline_at: params[:task_deadline_at],
-      Amount_bet: params[:Amount_bet],
-      task_user_ID: current_user.id
+      content: params[:content],
+      bet_user_id: params[:bet_user_id],
+      deadline_at: params[:deadline_at],
+      amount_bet: params[:amount_bet],
+      user_id: current_user.id
       )
     if @tasks.save
       redirect_to tasks_path(@task[:ID])
@@ -28,6 +28,6 @@ end
 private
 
 def task_params
-  params.require(:task).permit(:task_content,:task_bet_user_id,:task_user_id,
-                              :task_deadline_at,:Amount_bet)
+  params.require(:task).permit(:content,:bet_user_id,:user_id,
+                              :deadline_at,:amount_bet)
 end
