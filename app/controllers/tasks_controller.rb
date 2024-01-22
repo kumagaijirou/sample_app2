@@ -1,27 +1,27 @@
 class TasksController < ApplicationController
 
   def create
-    @tasks = Task.new(
+    @task = Task.new(
       content: params[:content],
       bet_user_id: params[:bet_user_id],
       deadline_at: params[:deadline_at],
       amount_bet: params[:amount_bet],
       user_id: current_user.id
       )
-    if @tasks.save
-      redirect_to tasks_path(@task[:ID])
+    if @task.save
+      redirect_to task_path(@task[:id])
     else
       render 'new', status: :unprocessable_entity
     end
   end
 
   def new
-    @tasks = Task.new
+    @task = Task.new
   end
 
   def show
-    @tasks = Task.find(params[:id])
-    #@tasks = Task.all
+    @task = Task.find(params[:id])
+    @tasks = Task.all
   end
 end
 
