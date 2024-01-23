@@ -17,10 +17,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_20_234304) do
     t.integer "bet_user_id"
     t.datetime "deadline_at"
     t.integer "amount_bet"
-    t.boolean "success_failure"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "created_at"], name: "index_Tasks_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -34,10 +34,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_20_234304) do
     t.string "activation_digest"
     t.boolean "activated", default: false
     t.datetime "activated_at"
-    t.text "profile"
-    t.integer "dice_point"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.text "profile"
+    t.integer "dice_point"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

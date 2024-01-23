@@ -15,6 +15,10 @@ class TasksController < ApplicationController
     end
   end
 
+  def index
+    @tasks = Task.where(user_id: current_user.id).paginate(page: params[:page])
+  end
+  
   def new
     @task = Task.new
   end
