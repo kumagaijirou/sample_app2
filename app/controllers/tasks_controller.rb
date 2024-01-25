@@ -17,6 +17,7 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.where(user_id: current_user.id).paginate(page: params[:page])
+    @task = Task.find_by(id: params[:id])
   end
   
   def new
@@ -25,7 +26,6 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
-    @tasks = Task.all
   end
 end
 
