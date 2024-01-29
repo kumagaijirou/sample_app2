@@ -4,13 +4,19 @@
     <section class="user_info">
       <h1>
         
-        <%= @task.user_id %><br>
-        <%= @task.user.name %><br>
-        <%= @task.content %><br>
-        <%= @task.bet_user_id %><br>
-        <%= @task.deadline_at %><br>
-        <%= @task.amount_bet %><br>
-
+        ユーザーID　<%= @task.user_id %><br>
+        名前　<%= @task.user.name %><br>
+        タスクの内容　<%= @task.content %><br>
+        かけるユーザーのID　<%= @task.bet_user_id %><br>
+        タスクの締切　<%= @task.deadline_at %><br>
+        かけるダイス数　<%= @task.amount_bet %><br>
+        <% if @task.status == 'ranning' && Time.now > task.deadline_at %>
+        <li><%= button_to '実行完了', {controller: 'task', action: 'success'}, {method: :get} %></li>
+        <% else %>
+        <% @task.status = '失敗' %>
+        <% @task.save %>
+        <% end %>
+        
       </h1>
     </section>
   </aside>
