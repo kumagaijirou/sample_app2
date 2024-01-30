@@ -28,7 +28,7 @@ class TasksController < ApplicationController
   def show
     @task = Task.find(params[:id])
   end
-end
+
 
   def status_run
     if @task.status == '成功'
@@ -37,13 +37,17 @@ end
       button_to "実行完了？", {controller: 'tasks', action: 'success'}, {method: :get}
     else
       @task.status = '失敗'
+      @task.save
     end
   end
 
   def success
+    @task = Task.find(params[:id])
     @task.status = '成功'
+    @task.save
     redirect_to task_path(@task[:id])
   end
+end
 
 private
 
