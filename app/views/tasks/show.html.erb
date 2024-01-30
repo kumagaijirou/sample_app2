@@ -10,12 +10,7 @@
         かけるユーザーのID　<%= @task.bet_user_id %><br>
         タスクの締切　<%= @task.deadline_at %><br>
         かけるダイス数　<%= @task.amount_bet %><br>
-        <% if @task.status == 'ranning' && Time.now > task.deadline_at %>
-        <li><%= button_to '実行完了', {controller: 'task', action: 'success'}, {method: :get} %></li>
-        <% else %>
-        <% @task.status = '失敗' %>
-        <% @task.save %>
-        <% end %>
+        <%= status_run %>
         
       </h1>
     </section>

@@ -7,7 +7,7 @@ class TasksController < ApplicationController
       deadline_at: params[:deadline_at],
       amount_bet: params[:amount_bet],
       user_id: current_user.id,
-      status: 'running'
+      status: '実行中'
       )
     if @task.save
       redirect_to task_path(@task[:id])
@@ -30,20 +30,19 @@ class TasksController < ApplicationController
   end
 end
 
-  #def status_ran
-  #  if @task.status == 'ranning' && Time.now < @task.deadline_at
-  #    button_to "実行完了", {controller: 'task', action: 'success'}, {method: :post}
-  #  else
-  #      @task.status = '失敗'
-        #@task.save
-  #  end
-  #end
+  def status_run
+    if @task.status == '成功'
+      @task.status
+    elsif @task.status == '実行中' && Time.now < @task.deadline_at
+      button_to "実行完了？", {controller: 'tasks', action: 'success'}, {method: :get}
+    else
+      @task.status = '失敗'
+    end
+  end
 
   def success
     @task.status = '成功'
-    #@task.save
-    render 'task.show', status: @task = Task.find(params[:id])
-    puts "task.status"
+    redirect_to task_path(@task[:id])
   end
 
 private
