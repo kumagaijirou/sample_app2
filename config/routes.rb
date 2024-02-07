@@ -12,11 +12,12 @@ Rails.application.routes.draw do
   get    "/login",   to: "sessions#new"
   post   "/login",   to: "sessions#create"
   delete "/logout",  to: "sessions#destroy"
-  get 'tasks/index'
-  get 'tasks/:id/success/', to: "tasks#success"
-  get 'tasks/status_run'
+  get "tasks/index"
+  patch 'tasks/:id/status_run/', to: "tasks#status_run", as: 'task_status_run'
+  get 'tasks/:id/success', to: "tasks#success"
+ 
   resources :users
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
-  resources :tasks,          only: [:create, :edit, :show, :update, :destroy ,:index]
+  resources :tasks,          only: [:create, :edit, :show, :update, :destroy ,:index,:new]
 end

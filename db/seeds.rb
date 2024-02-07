@@ -23,7 +23,7 @@ end
 
   #タスクを生成する
   Task.create!(content: "programming",
-              user_ID: 1,
-              bet_user_ID: 2,
+              user_id: 1,
+              bet_user_id: 2,
               deadline_at: Time.zone.now,
-              Amount_bet: 2000)
+              amount_bet: 2000)

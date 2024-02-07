@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_20_234304) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_07_011324) do
+  create_table "supports", force: :cascade do |t|
+    t.integer "task_id"
+    t.integer "user_id"
+    t.integer "support_fee"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.text "content"
     t.integer "user_id"

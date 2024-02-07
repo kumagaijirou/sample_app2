@@ -1,5 +1,4 @@
 class TasksController < ApplicationController
-
   def create
     @task = Task.new(
       content: params[:content],
@@ -29,21 +28,14 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
-
   def status_run
-    if @task.status == '成功'
-      @task.status
-    elsif @task.status == '実行中' && Time.now < @task.deadline_at
-      button_to "実行完了？", {controller: 'tasks', action: 'success'}, {method: :get}
+    @task = Task.find(params[:id])
+    if @task.status == '実行中' && Time.now < @task.deadline_at
+      @task.status = '成功'
     else
       @task.status = '失敗'
-      @task.save
     end
-  end
 
-  def success
-    @task = Task.find(params[:id])
-    @task.status = '成功'
     @task.save
     redirect_to task_path(@task[:id])
   end
@@ -51,7 +43,7 @@ end
 
 private
 
-def task_params
-  params.require(:task).permit(:content,:bet_user_id,:user_id,
-                              :deadline_at,:amount_bet,:status)
-end
+  def task_params
+    params.require(:task).permit(:content,:bet_user_id,:user_id,
+                                :deadline_at,:amount_bet,:status)
+  end
