@@ -14,10 +14,12 @@ Rails.application.routes.draw do
   delete "/logout",  to: "sessions#destroy"
   get "tasks/index"
   patch 'tasks/:id/status_run/', to: "tasks#status_run", as: 'task_status_run'
-  get 'tasks/:id/success', to: "tasks#success"
+  get "supports/new"
+
  
   resources :users
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
-  resources :tasks,          only: [:create, :edit, :show, :update, :destroy ,:index,:new]
+  resources :tasks,               only: [:create, :edit, :show, :update, :destroy ,:index,:new]
+  resources :supports,            only: [:new, :create, :show, :index]
 end

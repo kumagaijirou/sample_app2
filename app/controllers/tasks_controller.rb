@@ -45,5 +45,5 @@ private
 
   def task_params
     params.require(:task).permit(:content,:bet_user_id,:user_id,
-                                :deadline_at,:amount_bet,:status)
+                                :deadline_at,:amount_bet,:status, :image)
   end

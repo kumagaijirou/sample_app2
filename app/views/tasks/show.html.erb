@@ -12,7 +12,9 @@
         かけるダイス数　<%= @task.amount_bet %><br>
         <% if @task.status == '実行中' %>
           <%= button_to '実行完了？', task_status_run_path(@task), method: :patch, class: 'btn btn-primary' %>
+          <%= link_to '応援', new_support_path(@support), method: :get %>
         <% else %>
+
           <%# コメント：成功か失敗を表示する %>
           <%= @task.status %>
         <% end %>

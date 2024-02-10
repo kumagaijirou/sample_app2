@@ -1,5 +1,7 @@
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :support
+  has_one_attached :image
   default_scope -> { order(created_at: :desc) }
   validates :user_id, presence: true, numericality: {only_integer: true}
   validates :content, presence: true, length: { maximum: 140 }
