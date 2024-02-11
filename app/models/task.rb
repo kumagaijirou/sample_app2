@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
   belongs_to :user
-  has_many :support
+  has_many :supports
   has_one_attached :image
   default_scope -> { order(created_at: :desc) }
   validates :user_id, presence: true, numericality: {only_integer: true}

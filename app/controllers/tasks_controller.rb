@@ -26,6 +26,7 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
+    @supports = @task.supports
   end
 
   def status_run
