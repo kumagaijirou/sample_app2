@@ -1,20 +1,21 @@
-class SupportsController < ApplicationController  
+class SupportsController < ApplicationController
   def create
-    @task = Task.find(params[:id]),
+    @task = Task.find(params[:task_id])
     @support = Support.new(
       task_id: @task.id,
-      comment: params[:comment],
+      comment: params[:support][:comment],
       user_id: current_user.id,
-      support_fee: params[:support_fee]
+      support_fee: params[:support][:support_fee]
     )
     if @support.save
-      redirect_to suppert_index_path(@task[:id])
+      redirect_to task_path(@task[:id])
     else
       render 'new', status: :unprocessable_entity
     end
   end
 
   def new
+    @task = Task.find(params[:task_id])
     @support = Support.new
   end
 
@@ -25,9 +26,8 @@ class SupportsController < ApplicationController
   end
 
 
-  def Index
+  def index
     @task = Task.find(params[:id])
-    @support = Support.find(params[:id])
 end
 
 private

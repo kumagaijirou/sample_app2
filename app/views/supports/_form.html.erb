@@ -1,5 +1,6 @@
-<%= form_with url: {controller: 'supports', action: 'create' } do  |f| %>
- 
+<%= form_with model: @support, url: {controller: 'supports', action: 'create' } do  |f| %>
+  <%= f.hidden_field :task_id, value: @task.id %>
+
   <%= f.label :コメント %>
   <%= f.text_field :comment, class: 'form-control' %>
 
