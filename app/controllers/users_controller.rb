@@ -9,7 +9,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    #@task = @user.task.paginate(page: params[:page])
   end
   
   def new
@@ -52,7 +51,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
-                                 :password_confirmation)
+                                 :password_confirmation,:profile)
     end
 
         # beforeフィルタ

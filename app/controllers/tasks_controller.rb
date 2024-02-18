@@ -1,33 +1,50 @@
 class TasksController < ApplicationController
-
   def create
-    @tasks = Task.new(
-      task_content: params[:task_content],
-      task_bet_user_ID: params[:task_bet_user_ID],
-      task_deadline_at: params[:task_deadline_at],
-      Amount_bet: params[:Amount_bet],
-      task_user_ID: current_user.id
+    @task = Task.new(
+      content: params[:content],
+      bet_user_id: params[:bet_user_id],
+      deadline_at: params[:deadline_at],
+      amount_bet: params[:amount_bet],
+      user_id: current_user.id,
+      status: '実行中'
       )
-    if @tasks.save
-      redirect_to tasks_path(@task[:ID])
+    if @task.save
+      redirect_to task_path(@task[:id])
     else
       render 'new', status: :unprocessable_entity
     end
   end
 
+  def index
+    @tasks = Task.where(user_id: current_user.id).paginate(page: params[:page])
+    @task = Task.find_by(id: params[:id])
+  end
+  
   def new
-    @tasks = Task.new
+    @task = Task.new
   end
 
   def show
-    @tasks = Task.find(params[:id])
-    #@tasks = Task.all
+    @task = Task.find(params[:id])
+    @supports = @task.supports
+  end
+
+  def status_run
+    @task = Task.find(params[:id])
+    if @task.status == '実行中' && Time.now < @task.deadline_at
+      @task.status = '成功'
+    else
+      @task.status = '失敗'
+    end
+
+    @task.save
+    redirect_to task_path(@task[:id])
   end
 end
 
 private
 
-def task_params
-  params.require(:task).permit(:task_content,:task_bet_user_id,:task_user_id,
-                              :task_deadline_at,:Amount_bet)
-end
+  def task_params
+    params.require(:task).permit(:content,:bet_user_id,:user_id,
+                                :deadline_at,:amount_bet,:status, :image)
+  end
