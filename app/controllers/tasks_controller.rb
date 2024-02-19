@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   def create
     @task = Task.new(
       content: params[:content],
@@ -42,9 +43,29 @@ class TasksController < ApplicationController
   end
 end
 
+def Candidate
+  if  @task.bet_user_id == 1
+  @task = Task.find_by(id: params[:id]) 
+  @task.bet_user_id = current_user.id
+  @task.save
+  redirect_to task_candidate_path(@task[:id])
+  else "立候補できません。"
+    redirect to task_path(@task[:id])
+  end
+end
+
 private
 
   def task_params
     params.require(:task).permit(:content,:bet_user_id,:user_id,
                                 :deadline_at,:amount_bet,:status, :image)
   end
+
+ # ログイン済みユーザーかどうか確認
+ def logged_in_user
+  unless logged_in?
+    store_location
+    flash[:danger] = "Please log in."
+    redirect_to login_url, status: :see_other
+  end
+end

@@ -16,13 +16,13 @@
         <% else %>
 
           <%# コメント：成功か失敗を表示する %>
-          <%= @task.status %>
+          <%= @task.status %><br>
         <% end %>
         <% @supports.each do |support| %>
-        <%= link_to 'support.comment', support_path(@support.id), method: :get %>
-        <%= support.support_fee %>
-        <% end %>
-      </h1>
+        <%= link_to 'support.comment', support_path(@support.id), method: :get %><br>
+        <%= support.support_fee %><br>
+        <% end %><br>
+        
     </section>
   </aside>
 </div>
