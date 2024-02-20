@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   patch 'tasks/:id/status_run/', to: "tasks#status_run", as: 'task_status_run'
   get "supports/new"
   get "supports/tasks/:id", to: "supports#index", as: 'supports_index'
-  patch 'tasks/Candidate/:id', to: "tasks#Candidate", as: 'tasks_Candidate'
+  patch 'tasks/candidate/:id', to: "tasks#candidate", as: 'tasks_candidate'
 
   resources :users
   resources :account_activations, only: [:edit]

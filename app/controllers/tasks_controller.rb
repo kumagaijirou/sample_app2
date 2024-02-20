@@ -43,9 +43,9 @@ class TasksController < ApplicationController
   end
 end
 
-def Candidate
+def candidate
+  @task = Task.find(params[:id])
   if  @task.bet_user_id == 1
-  @task = Task.find_by(id: params[:id]) 
   @task.bet_user_id = current_user.id
   @task.save
   redirect_to task_candidate_path(@task[:id])

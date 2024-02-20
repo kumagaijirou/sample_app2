@@ -18,7 +18,7 @@
           <%# コメント：成功か失敗を表示する %>
           <%= @task.status %>
         <% end %>
-        <%= button_to '立候補する', tasks_Candidate_path(@task),method: :patch, class:'btn btn-primary' %>
+        <%= button_to '立候補する', tasks_candidate_path(@task),method: :patch, class:'btn btn-primary' %>
         <% @supports.each do |support| %>
           <%= support.comment %>
           <%= support.support_fee %>
