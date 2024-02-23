@@ -14,15 +14,27 @@
           <%= button_to '実行完了？', task_status_run_path(@task), method: :patch, class: 'btn btn-primary' %>
           <%= link_to '応援', new_task_support_path(task_id: @task.id), method: :get %>
         <% else %>
-         
+
           <%# コメント：成功か失敗を表示する %>
           <%= @task.status %>
         <% end %>
-        <%= button_to '立候補する', tasks_candidate_path(@task),method: :patch, class:'btn btn-primary' %>
-        <% @supports.each do |support| %>
-          <%= support.comment %>
-          <%= support.support_fee %>
-        <% end %>
+        <div>
+          <% if @task.user_id != current_user.id %>
+            <% if @task.bet_user_id == current_user.id %>
+              このタスクのポイントをもらうかもしれない候補になりました。
+            <% else %>
+              <%= button_to '立候補する', tasks_candidate_path(@task),method: :patch, class:'btn btn-primary' %>
+            <% end %>
+          <% else %>
+            自分のタスク
+          <% end%>
+        </div>
+        <div>
+          <% @supports.each do |support| %>
+            <%= support.comment %>
+            <%= support.support_fee %>
+          <% end %>
+        </div>
       </h1>
     </section>
   </aside>
