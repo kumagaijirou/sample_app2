@@ -20,7 +20,6 @@ class TasksController < ApplicationController
     @tasks = Task.where(user_id: current_user.id).paginate(page: params[:page])
     @task = Task.find_by(id: params[:id])
   end
-  
   def new
     @task = Task.new
   end
@@ -41,31 +40,31 @@ class TasksController < ApplicationController
     @task.save
     redirect_to task_path(@task[:id])
   end
-end
 
-def candidate
-  @task = Task.find(params[:id])
-  if  @task.bet_user_id == 1
-  @task.bet_user_id = current_user.id
-  @task.save
-  redirect_to task_candidate_path(@task[:id])
-  else "立候補できません。"
-    redirect to task_path(@task[:id])
-  end
-end
-
-private
-
-  def task_params
-    params.require(:task).permit(:content,:bet_user_id,:user_id,
-                                :deadline_at,:amount_bet,:status, :image)
+  def candidate
+    @task = Task.find(params[:id])
+    if @task.bet_user_id == 1
+      @task.bet_user_id = current_user.id
+      @task.save
+      redirect_to task_path(@task[:id])
+    else
+      logger.error('立候補できません')
+    end
   end
 
- # ログイン済みユーザーかどうか確認
- def logged_in_user
-  unless logged_in?
-    store_location
-    flash[:danger] = "Please log in."
-    redirect_to login_url, status: :see_other
-  end
+  private
+
+    def task_params
+      params.require(:task).permit(:content,:bet_user_id,:user_id,
+                                  :deadline_at,:amount_bet,:status, :image)
+    end
+
+    # ログイン済みユーザーかどうか確認
+    def logged_in_user
+      unless logged_in?
+        store_location
+        flash[:danger] = "Please log in."
+        redirect_to login_url, status: :see_other
+      end
+    end
 end
