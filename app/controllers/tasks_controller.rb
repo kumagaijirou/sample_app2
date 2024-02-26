@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   def create
-    @task = Task.new(
+      @task = Task.new(
       content: params[:content],
       bet_user_id: params[:bet_user_id],
       deadline_at: params[:deadline_at],
@@ -9,9 +9,13 @@ class TasksController < ApplicationController
       user_id: current_user.id,
       status: '実行中'
       )
-    if @task.save
+    if @task.amount_bet< @current_user.dice_point
+      @current_user.dice_point -@task.amount_bet(params[:id])
+      @current_user.save
+      @task.save
       redirect_to task_path(@task[:id])
     else
+      flash.now[:alert] = "ダイスが足りません。"
       render 'new', status: :unprocessable_entity
     end
   end
@@ -41,18 +45,22 @@ class TasksController < ApplicationController
     @task.save
     redirect_to task_path(@task[:id])
   end
-end
 
-def candidate
-  @task = Task.find(params[:id])
-  if  @task.bet_user_id == 1
-  @task.bet_user_id = current_user.id
-  @task.save
-  redirect_to task_candidate_path(@task[:id])
-  else "立候補できません。"
-    redirect to task_path(@task[:id])
+  def candidate
+    @task = Task.find(params[:id])
+    if  @task.bet_user_id == 1
+    @task.bet_user_id = current_user.id
+    @task.save
+    redirect_to task_path(@task[:id])
+    flash[:notice] = "ダイスをもらえる権利に立候補しました。"
+
+    else 
+      "立候補できません。"
+      redirect_to tasks_path(@task[:id])
+    end
   end
 end
+
 
 private
 

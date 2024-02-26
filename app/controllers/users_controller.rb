@@ -32,9 +32,11 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
+    if@user.dice_point = @user.dice_point + 1000 
+      @user.update(user_params)
       # 更新に成功した場合を扱う
       flash[:success] = "Profile updated"
+      flash[:notice] = "1000 dice_point 入手しました。"
       redirect_to @user
     else
       render 'edit', status: :unprocessable_entity
@@ -51,7 +53,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
-                                 :password_confirmation,:profile)
+                                 :password_confirmation,:profile,:dice_point)
     end
 
         # beforeフィルタ
