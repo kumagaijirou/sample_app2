@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-  
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy,:status_run]
+
   def create
       @task = Task.new(
       content: params[:content],
@@ -10,8 +10,8 @@ class TasksController < ApplicationController
       user_id: current_user.id,
       status: '実行中'
       )
-    if @task.amount_bet< @current_user.dice_point
-      @current_user.dice_point -@task.amount_bet(params[:id])
+    if @task.amount_bet < @current_user.dice_point
+      @current_user.dice_point = @current_user.dice_point - @task.amount_bet
       @current_user.save
       @task.save
       redirect_to task_path(@task[:id])
@@ -39,8 +39,17 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     if @task.status == '実行中' && Time.now < @task.deadline_at
       @task.status = '成功'
+      @current_user.dice_point = @current_user.dice_point + @task.amount_bet
+      @current_user.save
+      #問題の箇所１
+      @current_user.dice_point = @current_user.dice_point + @support.support_fee.find(user_id: current_user[:id])
+      @current_user.save
     else
       @task.status = '失敗'
+      #問題の箇所２
+      @task = Task.find_by(@user_id: bet_user_id)
+      @bet_user_id.dice_point = @bet_user_id.dice_point + @task.amount_det
+      @task.save
     end
 
     @task.save

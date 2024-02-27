@@ -7,9 +7,13 @@ class SupportsController < ApplicationController
       user_id: current_user.id,
       support_fee: params[:support][:support_fee]
     )
-    if @support.save
+    if @support.support_fee < @current_user.dice_point
+      @current_user.dice_point = @current_user.dice_point - @support.support_fee
+      @current_user.save
+      @support.save
       redirect_to task_path(@task[:id])
     else
+      flash.now[:alert] = "ダイスが足りません。"
       render 'new', status: :unprocessable_entity
     end
   end
