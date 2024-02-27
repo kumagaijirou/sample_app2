@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get "supports/new"
   get "supports/tasks/:id", to: "supports#index", as: 'supports_index'
   patch 'tasks/candidate/:id', to: "tasks#candidate", as: 'tasks_candidate'
-
+  
   resources :users
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
