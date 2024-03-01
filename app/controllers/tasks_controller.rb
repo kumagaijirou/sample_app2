@@ -25,7 +25,7 @@ class TasksController < ApplicationController
     @tasks = Task.where(user_id: current_user.id).paginate(page: params[:page])
     @task = Task.find_by(id: params[:id])
   end
-  
+
   def new
     @task = Task.new
   end
@@ -39,17 +39,35 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     if @task.status == '実行中' && Time.now < @task.deadline_at
       @task.status = '成功'
-      @current_user.dice_point = @current_user.dice_point + @task.amount_bet
-      @current_user.save
-      #問題の箇所１
-      @current_user.dice_point = @current_user.dice_point + @support.support_fee.find(user_id: current_user[:id])
+
+      # 問題の箇所１
+      # タスクに紐づく全ての応援費の合計を算出
+      support_fees = 0
+      @task.supports.each do |support|
+        if support.present?
+          support_fees += support.support_fee
+        end
+      end
+
+      # ベットと応援費合計をcurrent_userのdice_pointに代入
+      @current_user.dice_point += @task.amount_bet + support_fees
       @current_user.save
     else
       @task.status = '失敗'
-      #問題の箇所２
-      @task = Task.find_by(@user_id: bet_user_id)
-      @bet_user_id.dice_point = @bet_user_id.dice_point + @task.amount_det
-      @task.save
+
+      # 問題の箇所２
+      # bet_userがポイントを取得
+      # bet_userはview側で使う必要のない変数のため、パフォーマンスの観点からローカル変数で定義している
+      # nilの場合は+を使うとエラーとなるため、そのまま値を代入
+      bet_user_id = @task.bet_user_id
+      bet_user = User.find(bet_user_id)
+      bet_user.dice_point = bet_user.dice_point.present? ? bet_user.dice_point + @task.amount_bet : @task.amount_bet
+      bet_user.save!
+
+      # current_userがポイントを失う
+      # nilの場合は+を使うとエラーとなるため、そのまま値を代入
+      @current_user.dice_point = @current_user.dice_point.present? ? @current_user.dice_point - @task.amount_bet : - @task.amount_bet
+      @current_user.save!
     end
 
     @task.save
@@ -64,7 +82,7 @@ class TasksController < ApplicationController
     redirect_to task_path(@task[:id])
     flash[:notice] = "ダイスをもらえる権利に立候補しました。"
 
-    else 
+    else
       "立候補できません。"
       redirect_to tasks_path(@task[:id])
     end
