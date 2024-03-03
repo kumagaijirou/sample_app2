@@ -19,7 +19,7 @@
           <%= @task.status %><br>
         <% end %>
         <% @supports.each do |support| %>
-        <%= link_to 'support.comment', support_path(@support.id), method: :get %><br>
+        <%= link_to 'support.comment', support_path(support.id), method: :get %><br>
         <%= support.support_fee %><br>
         <% end %><br>
         

@@ -17,8 +17,17 @@
         <% else %>
          
           <%# コメント：成功か失敗を表示する %>
+          
+          <%= "このタスクは" %>
+          <%= @task.last_time_at %><br>
           <%= @task.status %>
-        <% end %>
+          <%= "で終了しました。" %>
+          <% if @task.status == "成功" || @task.status == "失敗" %><br>
+          <%= link_to '最後のメッセージを入力する', tasks_last_message_path(task_id: @task.id), method: :get %>
+          <% else %>
+          <%= @task.last_message %>
+          <% end %>
+        <% end %><br>
         
         <% @supports.each do |support| %>
           <%= support.comment %>
