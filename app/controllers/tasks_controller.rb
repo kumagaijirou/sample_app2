@@ -62,6 +62,16 @@ class TasksController < ApplicationController
       bet_user = User.find(bet_user_id)
       bet_user.dice_point = bet_user.dice_point.present? ? bet_user.dice_point + @task.amount_bet : @task.amount_bet
       bet_user.save!
+      @task.supports.each do |support|
+        if support.present?
+          support_user_id = support.user_id
+          support_user = User.find(support_user_id)
+          if support.present?
+            support_user.dice_point = support_user.dice_point.present? ? support_user.dice_point + support.support_fee : support.support_fee
+          end            
+        end
+        support_user.save!
+      end
     end
 
     @task.last_time_at = Time.now
@@ -83,9 +93,9 @@ class TasksController < ApplicationController
     end
   end
 
-  def last_message1
+  def last_message
     @task = Task.find(params[:id])
-    #redirect_to task_path(@task[:id])
+    redirect_to task_path(@task[:id])
   end
 
 end
