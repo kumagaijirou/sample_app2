@@ -15,11 +15,12 @@ Rails.application.routes.draw do
   get "users/ranking", to: "users#ranking"
   get "tasks/index"
   get "tasks/:id/last_message", to: "tasks#last_message",  as: 'tasks_last_message'
+  patch "tasks/:id/last_message", to: "tasks#update_last_message"
   patch 'tasks/:id/status_run/', to: "tasks#status_run", as: 'task_status_run'
   get "supports/new"
   get "supports/tasks/:id", to: "supports#index", as: 'supports_index'
   patch 'tasks/candidate/:id', to: "tasks#candidate", as: 'tasks_candidate'
-  
+
   resources :users
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
