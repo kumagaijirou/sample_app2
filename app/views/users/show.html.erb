@@ -6,7 +6,14 @@
         <%= gravatar_for @user %>
         <%= @user.name %>
         <%= @user.dice_point %><br>
-        <%= @user.profile %>
+        <%= @user.profile %><br>
+        <%= "タスク成功回数" %>
+        <%= @tasks = Task.where(user_id: params[:id], status: "成功").count %>
+        <%= "回" %><br>
+        <%= "タスク失敗回数" %>
+        <%= @tasks = Task.where(user_id: params[:id], status: "失敗").count %>
+        <%= "回" %>
+
 
       </h1>
     </section>

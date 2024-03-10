@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get    "/login",   to: "sessions#new"
   post   "/login",   to: "sessions#create"
   delete "/logout",  to: "sessions#destroy"
+  get "users/ranking", to: "users#ranking"
   get "tasks/index"
   get "tasks/:id/last_message", to: "tasks#last_message",  as: 'tasks_last_message'
   patch 'tasks/:id/status_run/', to: "tasks#status_run", as: 'task_status_run'
