@@ -25,6 +25,10 @@ class TasksController < ApplicationController
     @tasks = Task.where(user_id: current_user.id).paginate(page: params[:page])
     @task = Task.find_by(id: params[:id])
   end
+
+  def index2
+    @tasks = Task.all.paginate(page: params[:page])
+  end
   
   def new
     @task = Task.new
@@ -95,6 +99,11 @@ class TasksController < ApplicationController
 
   def last_message
     @task = Task.find(params[:id])
+  end
+
+  def update_last_message
+    @task = Task.find(params[:id])
+    @task.update!(last_message: params[:last_message])
     redirect_to task_path(@task[:id])
   end
 
@@ -105,7 +114,7 @@ private
 
   def task_params
     params.require(:task).permit(:content,:bet_user_id,:user_id,
-                                :deadline_at,:amount_bet,:status, 
+                                :deadline_at,:amount_bet,:status,
                                 :last_time_at,:last_message,:image)
   end
 

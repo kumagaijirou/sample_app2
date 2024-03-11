@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   delete "/logout",  to: "sessions#destroy"
   get "users/ranking", to: "users#ranking"
   get "tasks/index"
+  get "tasks/index2"
   get "tasks/:id/last_message", to: "tasks#last_message",  as: 'tasks_last_message'
+  patch "tasks/:id/last_message", to: "tasks#update_last_message"
   patch 'tasks/:id/status_run/', to: "tasks#status_run", as: 'task_status_run'
   get "supports/new"
   get "supports/tasks/:id", to: "supports#index", as: 'supports_index'

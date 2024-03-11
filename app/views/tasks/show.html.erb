@@ -21,13 +21,14 @@
           <%= "このタスクは" %>
           <%= @task.last_time_at %><br>
           <%= @task.status %>
-          <%= "で終了しました。" %>
-          <% if @task.status == "成功" || @task.status == "失敗" %><br>
+          <%= "で終了しました。" %><br><br>
+          <% if @task.last_message == nil %>
           <%= link_to '最後のメッセージを入力する', tasks_last_message_path(task_id: @task.id), method: :get %>
           <% else %>
-          <%= @task.last_message %>
+          <b><%= "タスクを終えての感想" %></b><br>
+          <%= @task.last_message %><br>
           <% end %>
-        <% end %><br>
+        <% end %>
         
         <% @supports.each do |support| %>
           <%= support.comment %>
