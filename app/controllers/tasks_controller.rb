@@ -43,7 +43,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     if @task.status == '実行中' && Time.now < @task.deadline_at
       @task.status = '成功'
-      
+
       # 問題の箇所１
       # タスクに紐づく全ての応援費の合計を算出
       support_fees = 0
@@ -72,7 +72,7 @@ class TasksController < ApplicationController
           support_user = User.find(support_user_id)
           if support.present?
             support_user.dice_point = support_user.dice_point.present? ? support_user.dice_point + support.support_fee : support.support_fee
-          end            
+          end
         end
         support_user.save!
       end
@@ -91,7 +91,7 @@ class TasksController < ApplicationController
     redirect_to task_path(@task[:id])
     flash[:notice] = "ダイスをもらえる権利に立候補しました。"
 
-    else 
+    else
       "立候補できません。"
       redirect_to tasks_path(@task[:id])
     end
@@ -106,7 +106,6 @@ class TasksController < ApplicationController
     @task.update!(last_message: params[:last_message])
     redirect_to task_path(@task[:id])
   end
-
 end
 
 

@@ -15,9 +15,9 @@
           <%= link_to '応援', new_task_support_path(task_id: @task.id), method: :get %>
           <%= button_to '立候補する', tasks_candidate_path(@task),method: :patch, class:'btn btn-primary' %>
         <% else %>
-         
+
           <%# コメント：成功か失敗を表示する %>
-          
+
           <%= "このタスクは" %>
           <%= @task.last_time_at %><br>
           <%= @task.status %>

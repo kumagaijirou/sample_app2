@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_27_235717) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_12_001507) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -37,6 +37,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_27_235717) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "quizzes", force: :cascade do |t|
+    t.integer "user_id"
+    t.text "question"
+    t.text "answer"
+    t.integer "number_of_times_solved"
+    t.integer "number_of_correct_answers"
+    t.integer "number_of_times_we_saw_the_answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "supports", force: :cascade do |t|
@@ -77,6 +88,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_27_235717) do
     t.datetime "reset_sent_at"
     t.text "profile"
     t.integer "dice_point"
+    t.text "final_answer"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

@@ -22,6 +22,10 @@ gem "sqlite3",         "1.6.1"
 gem "image_processing", "~> 1.2"
 
 group :development, :test do
+  gem 'pry-rails'
+  gem 'pry-doc'
+  gem 'pry-stack_explorer'
+  gem 'pry-byebug'
   gem "debug",   "1.7.1", platforms: %i[ mri mingw x64_mingw ]
 end
 
