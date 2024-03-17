@@ -36,7 +36,7 @@ class QuizzesController < ApplicationController
   
 
   def answer
-    @quiz = Quiz.find(params[:quiz_id])
+    @quiz = Quiz.find(params[:quizzes_id])
     #@user.update!(final_answer: params[:final_answer])
   end
 end

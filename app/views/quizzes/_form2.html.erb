@@ -3,7 +3,7 @@
 <%= form_with url: {controller: 'quizzes', action: 'answer' } do  |f| %>
 
   <%= f.label :答えの入力 %>
-  <%= f.text_field :users.final_answer, class: 'form-control' %>
+  <%= f.text_field :user.final_answer, class: 'form-control' %>
 
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>
