@@ -13,21 +13,12 @@
         <% if @task.status == '実行中' %>
           <%= button_to '実行完了？', task_status_run_path(@task), method: :patch, class: 'btn btn-primary' %>
           <%= link_to '応援', new_task_support_path(task_id: @task.id), method: :get %>
-          <%= button_to '立候補する', tasks_candidate_path(@task),method: :patch, class:'btn btn-primary' %>
+         <%= if @task.bet_user_id == current_user.id %>
+        このタスクのポイントをもらうかもしれない候補になりました。 
         <% else %>
-
+         
           <%# コメント：成功か失敗を表示する %>
-
-          <%= "このタスクは" %>
-          <%= @task.last_time_at %><br>
           <%= @task.status %>
-          <%= "で終了しました。" %><br><br>
-          <% if @task.last_message == nil %>
-          <%= link_to '最後のメッセージを入力する', tasks_last_message_path(task_id: @task.id), method: :get %>
-          <% else %>
-          <b><%= "タスクを終えての感想" %></b><br>
-          <%= @task.last_message %><br>
-          <% end %>
         <% end %>
         
         <% @supports.each do |support| %>
