@@ -17,23 +17,21 @@ class QuizzesController < ApplicationController
 
   def index
     @quizzes = Quiz.where(user_id: current_user.id).paginate(page: params[:page])
-    @quiz = Quiz.find_by(id: params[:id])
   end
 
   def index2
     @quizzes = Quiz.all.paginate(page: params[:page])
-    @quiz = Quiz.find_by(id: params[:id])
   end
-  
+
   def show
     @quiz = Quiz.find(params[:quiz_id])
   end
-  
+
   def new
     @quiz = Quiz.new
   end
 
-  
+
 
   def answer
     @quiz = Quiz.find(params[:quizzes_id])
@@ -50,7 +48,7 @@ end
   def user_params
     params.require(:user).permit(:final_answer)
   end
-      
+
  # ログイン済みユーザーかどうか確認
   def logged_in_user
     unless logged_in?
